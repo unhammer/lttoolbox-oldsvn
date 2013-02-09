@@ -188,8 +188,8 @@ Transducer::isFinal(int const state) const
 void
 Transducer::setFinal(int const state, bool valor)
 {
-  int initial_copy = getInitial();
 /*
+  int initial_copy = getInitial();
   if(state == initial_copy)
   {
     wcerr << L"Setting initial state to final" << endl;
@@ -623,19 +623,17 @@ Transducer::show(Alphabet &alphabet, FILE *output, int const epsilon_tag)
 {
   joinFinals(epsilon_tag);
 
-  map<int, multimap<int, int> > temporal;
-
   for(map<int, multimap<int, int> >::iterator it = transitions.begin(); it != transitions.end(); it++)
   {
     multimap<int, int> aux = it->second;
   
     for(multimap<int, int>::iterator it2 = aux.begin(); it2 != aux.end(); it2++) 
     {
-      pair<int, int> t = alphabet.decode(it2->first);
+      pair<int, int> p = alphabet.decode(it2->first);
       fwprintf(output, L"%d\t", it->first);
       fwprintf(output, L"%d\t", it2->second);
       wstring l = L"";
-      alphabet.getSymbol(l, t.first);
+      alphabet.getSymbol(l, p.first);
       if(l == L"")  // If we find an epsilon
       {
         fwprintf(output, L"ε\t", l.c_str());
@@ -645,7 +643,7 @@ Transducer::show(Alphabet &alphabet, FILE *output, int const epsilon_tag)
         fwprintf(output, L"%S\t", l.c_str());
       }
       wstring r = L"";
-      alphabet.getSymbol(r, t.second);
+      alphabet.getSymbol(r, p.second);
       if(r == L"")  // If we find an epsilon
       {
         fwprintf(output, L"ε\t", r.c_str());
@@ -661,6 +659,104 @@ Transducer::show(Alphabet &alphabet, FILE *output, int const epsilon_tag)
   for(set<int>::iterator it3 = finals.begin(); it3 != finals.end(); it3++)
   {
     fwprintf(output, L"%d\n", *it3);
+  }
+}
+
+void
+Transducer::trim(Alphabet const &alph, Alphabet const &alph_trim_to, map<wstring, Transducer> const &trim_to, int const epsilon_tag)
+{
+  bool debug=true;
+  
+  joinFinals(epsilon_tag);      // TODO necessary?
+
+  typedef std::set<pair<wstring, int> > LiveSet;
+  typedef std::set<int, LiveSet> UntrSet;
+  std::list<pair<int, LiveSet > > untrimmed;
+  LiveSet live_trim_to;
+  
+  // Record initial states in trim_to
+  for(map<wstring, Transducer>::const_iterator it = trim_to.begin(); it != trim_to.end(); it++)
+  {
+    live_trim_to.insert(pair<wstring, int>(it->first, it->second.initial));
+  }
+
+  untrimmed.push_back(pair<int, LiveSet >(initial, live_trim_to));
+  while(untrimmed.size() > 0) 
+  {
+    pair<int, LiveSet > auxest = untrimmed.front();
+    untrimmed.pop_front();
+    
+    int current = auxest.first;
+    if(debug) 
+    {
+      wcout << L"current_this: " << current << L"\ttransitions.size(): " << transitions.size() << endl;
+    }
+
+    map<int, multimap<int, int> >::const_iterator it = transitions.find(current);
+    if(it == transitions.end()) 
+    {
+      wcerr << L"ERROR: Didn't find referenced state " << current << endl;
+      exit(EXIT_FAILURE);
+    }
+    multimap<int, int> edges = it->second;
+
+    LiveSet live_trim_to = auxest.second;
+
+    for(multimap<int, int>::iterator edge = edges.begin(); edge != edges.end(); edge++) 
+    {
+      int label = edge->first;
+      pair<int, int> p = alph.decode(label);
+      int to_state = edge->second;
+
+      for(LiveSet::const_iterator it_live = live_trim_to.begin(); it_live != live_trim_to.end(); it_live++) 
+      {
+        wstring section_name = it_live->first;
+        int current_trim_to = it_live->second;
+        map<wstring, Transducer>::const_iterator it_live_sec = trim_to.find(section_name);
+        if(it_live_sec == trim_to.end()) 
+        {
+          wcerr << L"ERROR: Didn't find referenced section " << section_name << endl;
+          exit(EXIT_FAILURE);
+        }
+        map<int, multimap<int, int> >::const_iterator it_live_t = it_live_sec->second.transitions.find(current_trim_to);
+        if(it_live_t == it_live_sec->second.transitions.end())
+        {
+          wcerr << L"ERROR: Didn't find referenced state " << current_trim_to << L" in section " << section_name << endl<<endl;
+          exit(EXIT_FAILURE);
+        }
+        multimap<int, int> edges_trim_to = it_live_t->second;
+
+        if(debug) 
+        {
+          wcout << L"section: "<< section_name << L"\tcurrent_live_trim_to: " << current_trim_to << endl;
+          wstring l=L"";alph.getSymbol(l, p.first);wstring r=L"";alph.getSymbol(r, p.second);
+          wcout << L"current: " << current << L" label: " << label <<L" " << p.first << L":" << p.second << L" ("<<l<<L":"<<r<<L")" << endl;
+          wcout <<L"p:"<< p.first<<L":"<<p.second << L" encoded: " << alph.encode(p) <<L" label:"<<label <<endl;
+          wcout <<L"p:"<< p.first<<L":"<<p.second << L" trim_to_encoded: " << alph_trim_to.encode(p) <<L" label:"<<label <<endl;
+
+          if(edges_trim_to.find(alph_trim_to.encode(p)) != edges_trim_to.end()) wcout << L" found a match on both l and r" <<endl;
+          else wcout <<L" not found in full label, but might exist in just l"<<endl;
+        }
+        // The "not found" above might be false; the above looks for
+        // an edge where _both_ <l> and <r> match, but we only need a
+        // match on <l>. So either we can loop through all
+        // edges_trim_to, or we can preprocess the trim_to transducers
+        // s.t. we can lookup on an <l>
+        for(multimap<int, int>::iterator edge_trim_to = edges_trim_to.begin(); edge_trim_to != edges_trim_to.end(); edge_trim_to++)
+        {
+          int label_trim_to = edge_trim_to->first;
+          pair<int, int> p_trim_to = alph_trim_to.decode(label_trim_to);
+
+          int to_state_trim_to = edge_trim_to->second;
+          if(debug)
+          {            
+            wcout <<L"p_trim_to:"<< p_trim_to.first<<L":"<<p_trim_to.second << L" encoded: " << alph_trim_to.encode(p_trim_to) <<L" label:"<<label_trim_to <<endl;
+            wstring l_trim_to=L"";alph_trim_to.getSymbol(l_trim_to, p_trim_to.first);wstring r_trim_to=L"";alph_trim_to.getSymbol(r_trim_to, p_trim_to.second);
+            wcout << L"current_trim_to: " << current_trim_to << L" label_trim_to: " << label_trim_to << L" " << p_trim_to.first << L":" << p_trim_to.second << L" ("<<l_trim_to<<L":"<<r_trim_to<<L")" << L" to_state_trim_to:"<<to_state_trim_to <<endl;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -692,7 +788,7 @@ Transducer::recognise(wstring patro, Alphabet &a, FILE *err)
   for(wstring::iterator it = patro.begin(); it != patro.end(); it++)  
   {
     set<int> new_state;        //Transducer::closure(int const state, int const epsilon_tag)
-    int sym = *it;
+    //int sym = *it;
     // For each of the current alive states
     //fwprintf(err, L"step: %S %C (%d)\n", patro.c_str(), *it, sym);
     for(set<int>::iterator it2 = states.begin(); it2 != states.end(); it2++)

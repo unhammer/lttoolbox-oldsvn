@@ -154,6 +154,8 @@ public:
 
   pair<int, int> const & decode(int const code) const;
   
+  int const encode(pair<int, int> const &uncode) const;
+  
 };
 
 #endif

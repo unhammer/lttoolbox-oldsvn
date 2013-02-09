@@ -222,6 +222,21 @@ Alphabet::decode(int const code) const
   return spairinv[code];
 }
 
+int const
+Alphabet::encode(pair<int, int> const &uncode) const
+{
+  //return spair[uncode];
+  map<pair<int,int>, int>::const_iterator it = spair.find(uncode);
+  if(it != spair.end()) 
+  {
+    return it->second;
+  }
+  else
+  {
+    return -1;                  // TODO: what to do on failure?
+  }
+}
+
 
 void Alphabet::setSymbol(int symbol, wstring newSymbolString) {
   //Should be a special character!

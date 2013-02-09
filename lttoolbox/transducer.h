@@ -191,6 +191,16 @@ public:
    */
   void show(Alphabet &a, FILE *output = stdout, int const epsilon_tag = 0);
 
+
+  /**
+   * Trim right-sides of this transducer down to left-sides another
+   * @param alphabet of this transducer
+   * @param alphabet of trim_to transducer
+   * @param trim_to other transducer to trim to, typically a bidix
+   * @param epsilon_tag the tag to take as epsilon
+   */
+  void trim(Alphabet const &alph, Alphabet const &alph_trim_to, map<wstring, Transducer> const &trim_to, int const epsilon_tag = 0);
+
   /**
    * Determinize the transducer
    * @param epsilon_tag the tag to take as epsilon
