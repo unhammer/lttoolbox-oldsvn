@@ -36,6 +36,7 @@ TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int cons
 
   typedef std::pair<int, State*> untrPair;
   std::list<untrPair> untrimmed; // used last-in-first-out / depth-first to avoid memory blow-up
+  std::set<int> seen;
 
   untrimmed.push_front(untrPair(getInitial(), trim_to.getInitial()));
   while(untrimmed.size() > 0)
@@ -44,6 +45,8 @@ TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int cons
     untrimmed.pop_back();
 
     int current = auxest.first;
+    seen.insert(current);
+
     //wcout << L"from " << current << L"\ttransitions.size(): " << transitions.size() << endl;
 
     std::map<int, multimap<int, int> >::const_iterator it = transitions.find(current);
@@ -81,7 +84,7 @@ TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int cons
           edges.erase(label);
           transitions[current] = edges;
         }
-        else
+        else if(seen.count(to_state) == 0)
         {
           //wcout<<L"\t"<<r<<L" ->stepping"<<endl;
           untrimmed.push_front(untrPair(to_state, next_trim_to));
