@@ -7,7 +7,7 @@ INCLUDE_DIRECTORIES (${ICONV_INCLUDE_DIR})
 ADD_LIBRARY (lttoolbox3 STATIC alphabet.cc compiler.cc compression.cc entry_token.cc
              expander.cc fst_processor.cc lt_locale.cc match_exe.cc
              match_node.cc match_state.cc node.cc pattern_list.cc
-             regexp_compiler.cc sorted_vector.cc state.cc transducer.cc
+             regexp_compiler.cc sorted_vector.cc state.cc transducer.cc trim_transducer.cc
              trans_exe.cc xml_parse_util.cc tmx_compiler.cc ${EXTRA_SOURCES})
 
 TARGET_LINK_LIBRARIES (lttoolbox3 ${LIBXML2_LIBRARIES} ${ICONV_LIBRARIES})

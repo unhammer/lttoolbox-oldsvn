@@ -48,11 +48,6 @@ private:
   set<int> finals;
 
   /**
-   * Transitions of the transducer
-   */
-  map<int, multimap<int, int> > transitions;
-
-  /**
    * New state creator
    * @return the new state number
    */
@@ -76,6 +71,15 @@ private:
    * Empty transducer
    */
   void destroy();
+
+protected:
+
+  /**
+   * Transitions of the transducer
+   */
+  map<int, multimap<int, int> > transitions;
+
+
 public:
 
   /**
@@ -190,6 +194,7 @@ public:
    * @param epsilon_tag the tag to take as epsilon
    */
   void show(Alphabet &a, FILE *output = stdout, int const epsilon_tag = 0);
+
 
   /**
    * Determinize the transducer

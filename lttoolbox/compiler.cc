@@ -120,6 +120,16 @@ Compiler::parse(string const &fichero, wstring const &dir)
   {
     (it->second).minimize();
   }
+  for(map<wstring, Transducer, Ltstr>::iterator it = sections.begin(),
+                                               limit = sections.end(); 
+      it != limit; it++)
+  {
+    if((it->second).isFinal((it->second).getInitial()))
+    {
+      wcerr << L"Error: Invalid section " << it->first << " (hint: the left side of an entry is empty)" << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
 }
 
 

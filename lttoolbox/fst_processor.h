@@ -387,6 +387,10 @@ public:
   void setNullFlush(bool const value);
   bool getNullFlush();
   bool getDecompoundingMode();
+
+  State* getInitial() const;
+  set<Node *> const & getAllFinals() const;
+  Alphabet getAlphabet() const;
 };
 
 #endif

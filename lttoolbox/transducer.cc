@@ -188,8 +188,8 @@ Transducer::isFinal(int const state) const
 void
 Transducer::setFinal(int const state, bool valor)
 {
-  int initial_copy = getInitial();
 /*
+  int initial_copy = getInitial();
   if(state == initial_copy)
   {
     wcerr << L"Setting initial state to final" << endl;
@@ -623,19 +623,17 @@ Transducer::show(Alphabet &alphabet, FILE *output, int const epsilon_tag)
 {
   joinFinals(epsilon_tag);
 
-  map<int, multimap<int, int> > temporal;
-
   for(map<int, multimap<int, int> >::iterator it = transitions.begin(); it != transitions.end(); it++)
   {
     multimap<int, int> aux = it->second;
   
     for(multimap<int, int>::iterator it2 = aux.begin(); it2 != aux.end(); it2++) 
     {
-      pair<int, int> t = alphabet.decode(it2->first);
+      pair<int, int> p = alphabet.decode(it2->first);
       fwprintf(output, L"%d\t", it->first);
       fwprintf(output, L"%d\t", it2->second);
       wstring l = L"";
-      alphabet.getSymbol(l, t.first);
+      alphabet.getSymbol(l, p.first);
       if(l == L"")  // If we find an epsilon
       {
         fwprintf(output, L"ε\t", l.c_str());
@@ -645,7 +643,7 @@ Transducer::show(Alphabet &alphabet, FILE *output, int const epsilon_tag)
         fwprintf(output, L"%S\t", l.c_str());
       }
       wstring r = L"";
-      alphabet.getSymbol(r, t.second);
+      alphabet.getSymbol(r, p.second);
       if(r == L"")  // If we find an epsilon
       {
         fwprintf(output, L"ε\t", r.c_str());
@@ -663,6 +661,7 @@ Transducer::show(Alphabet &alphabet, FILE *output, int const epsilon_tag)
     fwprintf(output, L"%d\n", *it3);
   }
 }
+
 
 int 
 Transducer::getStateSize(int const state)
@@ -692,7 +691,7 @@ Transducer::recognise(wstring patro, Alphabet &a, FILE *err)
   for(wstring::iterator it = patro.begin(); it != patro.end(); it++)  
   {
     set<int> new_state;        //Transducer::closure(int const state, int const epsilon_tag)
-    int sym = *it;
+    //int sym = *it;
     // For each of the current alive states
     //fwprintf(err, L"step: %S %C (%d)\n", patro.c_str(), *it, sym);
     for(set<int>::iterator it2 = states.begin(); it2 != states.end(); it2++)

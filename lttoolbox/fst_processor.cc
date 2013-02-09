@@ -760,6 +760,24 @@ FSTProcessor::initBiltrans()
 }
 
 
+set<Node *> const &
+FSTProcessor::getAllFinals() const
+{
+  return all_finals;
+}
+
+State*
+FSTProcessor::getInitial() const
+{
+  return initial_state;
+}
+
+Alphabet
+FSTProcessor::getAlphabet() const
+{
+  return alphabet;
+}
+
 wstring
 FSTProcessor::compoundAnalysis(wstring input_word, bool uppercase, bool firstupper) {
     const int MAX_COMBINATIONS = 500;
