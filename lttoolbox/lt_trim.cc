@@ -41,8 +41,9 @@ void endProgram(char *name)
 
 
 std::pair<std::pair<wstring, Alphabet>, std::map<wstring, TrimTransducer> >
-read_fst(FILE *bin_file)        // equals FSTProcessor::load
+read_fst(FILE *bin_file)
 {
+  // like FSTProcessor::load, but return <<letters,Alphabet>,map::<name,Transducer>>
   Alphabet alphabet;
 
   // vector<wchar_t> alphabetic_chars;
@@ -51,13 +52,11 @@ read_fst(FILE *bin_file)        // equals FSTProcessor::load
   // letters
   int len = Compression::multibyte_read(bin_file);
   wchar_t alphabetic_chars[len];
-  while(len > 0)
+  for(int i=0; i<len; i++) 
   {
-    alphabetic_chars[len]= static_cast<wchar_t>(Compression::multibyte_read(bin_file));
-    len--;
+    alphabetic_chars[i]= static_cast<wchar_t>(Compression::multibyte_read(bin_file));
   }
-  wstring foo = wstring(alphabetic_chars);
-
+  wstring letters = wstring(alphabetic_chars, len);
 
   // symbols
   alphabet.read(bin_file);
@@ -77,7 +76,7 @@ read_fst(FILE *bin_file)        // equals FSTProcessor::load
 
     len--;
   }
-  std::pair<wstring, Alphabet> letters_alph = std::pair<wstring, Alphabet>(foo, alphabet);
+  std::pair<wstring, Alphabet> letters_alph = std::pair<wstring, Alphabet>(letters, alphabet);
   return std::pair<std::pair<wstring, Alphabet>, map<wstring, TrimTransducer> >(letters_alph, transducers);
 }
 
