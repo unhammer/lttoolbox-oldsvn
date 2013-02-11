@@ -30,7 +30,9 @@ class TrimTransducer : public Transducer
 
 public:
   /**
-   * Trim right-sides of this transducer down to left-sides another
+   * Destructively Trim right-sides of this transducer down to
+   * left-sides of another.
+   *
    * @param alph alphabet of this transducer
    * @param trim_to other transducer to trim to, typically a bidix
    * @param epsilon_tag the tag to take as epsilon
