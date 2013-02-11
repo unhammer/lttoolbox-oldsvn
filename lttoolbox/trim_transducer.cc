@@ -116,4 +116,6 @@ TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int cons
     }
     if(DEBUG) wcout<<L"untrimmed.size: "<<untrimmed.size()<<endl;
   }
+
+  minimize();
 }

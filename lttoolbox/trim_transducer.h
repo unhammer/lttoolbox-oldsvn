@@ -33,6 +33,8 @@ public:
    * Destructively Trim right-sides of this transducer down to
    * left-sides of another.
    *
+   * TODO: words with spaces, +, # 
+   *
    * @param alph alphabet of this transducer
    * @param trim_to other transducer to trim to, typically a bidix
    * @param epsilon_tag the tag to take as epsilon
