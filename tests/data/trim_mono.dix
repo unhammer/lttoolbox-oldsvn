@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary>
+  <alphabet>АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџшЭѐѝюABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzè</alphabet>
+<sdefs>
+    <sdef n="n" 	c="Noun"/>
+    <sdef n="np" 	c="Proper noun"/>
+    <sdef n="top"   c="Toponym"/>
+    <sdef n="attr"  c="Attributive (certain proper nouns)"/>
+    <sdef n="prn" 	c="Pronoun"/>
+    <sdef n="ref" 	c="Reflexive pronoun"/>
+    <sdef n="res" 	c="Reciprocal pronoun"/>
+    <sdef n="det" 	c="Determiner"/>
+    <sdef n="pos" 	c="Possessive"/>
+    <sdef n="p1" 	c="1st person"/>
+    <sdef n="p2" 	c="2nd person"/>
+    <sdef n="p3" 	c="3rd person"/>
+    <sdef n="nt" 	c="Neuter"/>
+    <sdef n="mf" 	c="Masculine / feminine, also utrum in nouns"/>
+    <sdef n="f" 	c="Feminine"/>
+    <sdef n="m" 	c="Masculine"/>
+    <sdef n="sp" 	c="Singular / plural"/>
+    <sdef n="sg" 	c="Singular"/>
+    <sdef n="pl" 	c="Plural"/>
+    <sdef n="ind" 	c="Indefinite"/>
+    <sdef n="def" 	c="Definite"/>
+    <sdef n="nom" 	c="Nominative"/>
+    <sdef n="acc" 	c="Accusative"/>
+    <sdef n="gen" 	c="Genitive"/>
+    <sdef n="dem" 	c="Demonstrative"/>
+    <sdef n="itg" 	c="Question word / interrogative"/>
+    <sdef n="qnt" 	c="Quantifier"/>
+    <sdef n="neg" 	c="Negative"/>
+    <sdef n="emph" 	c="Emphatic"/>
+    <sdef n="vblex" 	c="Verb"/>
+    <sdef n="pass" 	c="-st form"/>
+    <sdef n="pstv" 	c="-st verb"/>
+    <sdef n="inf" 	c="Infinitive"/>
+    <sdef n="pres" 	c="Present"/>
+    <sdef n="imp" 	c="Imperative"/>
+    <sdef n="pret" 	c="Preterite"/>
+    <sdef n="pr" 	c="Preposition"/>
+    <sdef n="adv" 	c="Adverb"/>
+    <sdef n="ij" 	c="Interjection"/>
+    <sdef n="adj" 	c="Adjective"/>
+    <sdef n="cnjsub" 	c="Subordinating conjunction"/>
+    <sdef n="cnjcoo" 	c="Co-ordinating conjunction"/>
+    <sdef n="cnjadv" 	c="Adverbial conjunction"/>
+    <sdef n="comp" 	c="Comparative"/>
+    <sdef n="sup" 	c="Superlative"/>
+    <sdef n="num" 	c="Numeral"/>
+    <sdef n="ord" 	c="Ordinal"/>
+    <sdef n="acr" 	c="Acronym"/>
+    <sdef n="sent" 	c="Sentence end"/>
+    <sdef n="cm" 	c="Comma"/>
+    <sdef n="apos" 	c="Apostrophe"/>
+    <sdef n="clb" 	c="Possible clause boundary"/>
+    <sdef n="lpar" 	c="Left parenthesis"/>
+    <sdef n="rpar" 	c="Right parenthesis"/>
+
+    <sdef n="email" 	c="Email address"/>
+
+    <sdef n="rel"/>
+    <sdef n="past"/>
+    <sdef n="pp"/>
+    <sdef n="ger"/>
+    <sdef n="nn"/>
+
+    <sdef n="compound-only-L" 	c="May only be the left-side of a compound"/>
+    <sdef n="compound-R" 	c="May be the right-side of a compound, or a full word"/>
+  </sdefs>
+  <pardefs>
+    <pardef n="bec/ome__vblex">
+      <e>       <p><l>ome</l>       <r>ome<s n="vblex"/><s n="inf"/></r></p></e>
+      <e>       <p><l>ome</l>       <r>ome<s n="vblex"/><s n="pres"/></r></p></e>
+      <e>       <p><l>omes</l>      <r>ome<s n="vblex"/><s n="pres"/><s n="p3"/><s n="sg"/></r></p></e>
+      <e>       <p><l>ame</l>       <r>ome<s n="vblex"/><s n="past"/></r></p></e>
+      <e>       <p><l>ome</l>       <r>ome<s n="vblex"/><s n="pp"/></r></p></e>
+      <e>       <p><l>oming</l>     <r>ome<s n="vblex"/><s n="ger"/></r></p></e>
+    </pardef>
+
+    <pardef n="lø/e__n">
+      <e>       <p><l>ene</l>   <r>e<s n="n"/><s n="f"/><s n="pl"/><s n="def"/><s n="compound-R"/></r></p></e>
+      <e>       <p><l>er</l>    <r>e<s n="n"/><s n="f"/><s n="pl"/><s n="ind"/><s n="compound-R"/></r></p></e>
+      <e>       <p><l>a</l>     <r>e<s n="n"/><s n="f"/><s n="sg"/><s n="def"/><s n="compound-R"/></r></p></e>
+      <e>       <p><l>e</l>     <r>e<s n="n"/><s n="f"/><s n="sg"/><s n="ind"/><s n="compound-only-L"/></r></p></e>
+      <e>       <p><l>e</l>     <r>e<s n="n"/><s n="f"/><s n="sg"/><s n="ind"/></r></p></e>
+    </pardef>
+
+    <pardef n="lø/e_no-cp__n">
+      <e>       <p><l>ene</l>   <r>e<s n="n"/><s n="f"/><s n="pl"/><s n="def"/></r></p></e>
+      <e>       <p><l>er</l>    <r>e<s n="n"/><s n="f"/><s n="pl"/><s n="ind"/></r></p></e>
+      <e>       <p><l>a</l>     <r>e<s n="n"/><s n="f"/><s n="sg"/><s n="def"/></r></p></e>
+      <e>       <p><l>e</l>     <r>e<s n="n"/><s n="f"/><s n="sg"/><s n="ind"/></r></p></e>
+    </pardef>
+  </pardefs>
+
+  <section id="main" type="standard">
+    <!-- simple words -->
+    <e lm="æve">          <i>æv</i><par n="lø/e_no-cp__n"/></e>
+    <e lm="løe">          <i>lø</i><par n="lø/e_no-cp__n"/></e>
+    <e lm="ete">             <i>et</i><par n="lø/e_no-cp__n"/></e>
+    <e lm="nobidix">             <i>nobidix</i><par n="lø/e_no-cp__n"/></e>
+
+    <!-- compounding -->
+    <e lm="rive">            <i>riv</i><par n="lø/e__n"/></e>
+    <e lm="semje">           <i>semj</i><par n="lø/e__n"/></e>
+    <e lm="tåke">            <i>tåk</i><par n="lø/e__n"/></e>
+    <e lm="tåre">        <i>tår</i><par n="lø/e__n"/></e>
+    <e lm="cmpnobidix">        <i>cmpnobidix</i><par n="lø/e__n"/></e>
+
+    <!-- regex -->
+    <e>             <re>[a-z]+@[a-z]+.yes</re><p><l/><r><s n="email"/></r></p></e>
+    <e>             <re>[a-z]+@[a-z]+.no</re><p><l/><r><s n="email"/></r></p></e>
+
+    <!-- the j tag / + -->
+    <e lm="al qual"><p><l>al<b/>qual</l><r>a<s n="pr"/><j/>el<b/>qual<s n="rel"/><s n="nn"/><s n="m"/><s n="sg"/></r></p></e>
+    <e lm="al que"><p><l>al<b/>que</l><r>a<s n="pr"/><j/>el<b/>que<s n="rel"/><s n="nn"/><s n="m"/><s n="sg"/></r></p></e>
+    <e lm="al nobidix"><p><l>al<b/>nobidix</l><r>a<s n="pr"/><j/>el<b/>nobidix<s n="rel"/><s n="nn"/><s n="m"/><s n="sg"/></r></p></e>
+
+
+    <!-- the g tag / # -->
+    <e lm="become"><i>bec</i><par n="bec/ome__vblex"/></e>
+    <e lm="become acquainted">
+      <i>bec</i>
+      <par n="bec/ome__vblex"/>
+      <p>
+        <l><b/>acquainted</l>
+        <r><g><b/>acquainted</g></r>
+      </p>
+    </e>
+    <e lm="become acquainted with">
+      <i>bec</i>
+      <par n="bec/ome__vblex"/>
+      <p>
+        <l><b/>acquainted<b/>with</l>
+        <r><g><b/>acquainted<b/>with</g></r>
+      </p>
+    </e>
+    <e lm="become acquainted nobidix">
+      <i>bec</i>
+      <par n="bec/ome__vblex"/>
+      <p>
+        <l><b/>acquainted<b/>nobidix</l>
+        <r><g><b/>acquainted<b/>nobidix</g></r>
+      </p>
+    </e>
+
+    <!-- j followed by g -->
+    <e lm="be not sorry">
+      <p><l>be</l>       <r>be<s n="vblex"/><s n="inf"/></r></p>
+      <p><l><b/>not<b/>sorry</l><r><j/>not<s n="adv"/><g><b/>sorry</g></r></p>
+    </e>
+    <e lm="be not inbidix">
+      <p><l>be</l>       <r>be<s n="vblex"/><s n="inf"/></r></p>
+      <p><l><b/>not<b/>inbidix</l><r><j/>not<s n="adv"/><g><b/>inbidix</g></r></p>
+    </e>
+
+    <!-- g containing j -->
+    <e lm="servir à">
+      <i>ser</i>
+      <p><l>vir</l>       <r>vir<s n="vblex"/><s n="inf"/></r></p>
+      <p><l><b/>à</l><r><g><j/>à<s n="pr"/></g></r></p>
+    </e>
+    <e lm="desservir à">
+      <i>desser</i>
+      <p><l>vir</l>       <r>vir<s n="vblex"/><s n="inf"/></r></p>
+      <p><l><b/>à</l><r><g><j/>à<s n="pr"/></g></r></p>
+    </e>
+    <e lm="servir nobidix">
+      <i>ser</i>
+      <p><l>vir</l>       <r>vir<s n="vblex"/><s n="inf"/></r></p>
+      <p><l><b/>nobidix</l><r><g><j/>nobidix<s n="pr"/></g></r></p>
+    </e>
+    <e lm="desservir à nobidix">
+      <i>desser</i>
+      <p><l>vir</l>       <r>vir<s n="vblex"/><s n="inf"/></r></p>
+      <p><l><b/>à<b/>nobidix</l><r><g><j/>à<b/>nobidix<s n="pr"/></g></r></p>
+    </e>
+
+  </section>
+
+  <section id="punct" type="inconditional">
+    <e>             <i>.</i><p><l/><r><s n="sent"/></r></p></e>
+    <e>             <i>,</i><p><l/><r><s n="cm"/></r></p></e>
+    <e>             <i>,nobidix</i><p><l/><r><s n="cm"/></r></p></e>
+  </section>
+
+</dictionary>

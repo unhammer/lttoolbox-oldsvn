@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary>
+  <alphabet>АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџшЭѐѝюABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzè</alphabet>
+  <sdefs>
+    <sdef n="n" 	c="Noun"/>
+    <sdef n="np" 	c="Proper noun"/>
+    <sdef n="top"   c="Toponym"/>
+    <sdef n="attr"  c="Attributive (certain proper nouns)"/>
+    <sdef n="prn" 	c="Pronoun"/>
+    <sdef n="ref" 	c="Reflexive pronoun"/>
+    <sdef n="res" 	c="Reciprocal pronoun"/>
+    <sdef n="det" 	c="Determiner"/>
+    <sdef n="pos" 	c="Possessive"/>
+    <sdef n="p1" 	c="1st person"/>
+    <sdef n="p2" 	c="2nd person"/>
+    <sdef n="p3" 	c="3rd person"/>
+    <sdef n="nt" 	c="Neuter"/>
+    <sdef n="mf" 	c="Masculine / feminine, also utrum in nouns"/>
+    <sdef n="f" 	c="Feminine"/>
+    <sdef n="m" 	c="Masculine"/>
+    <sdef n="sp" 	c="Singular / plural"/>
+    <sdef n="sg" 	c="Singular"/>
+    <sdef n="pl" 	c="Plural"/>
+    <sdef n="ind" 	c="Indefinite"/>
+    <sdef n="def" 	c="Definite"/>
+    <sdef n="nom" 	c="Nominative"/>
+    <sdef n="acc" 	c="Accusative"/>
+    <sdef n="gen" 	c="Genitive"/>
+    <sdef n="dem" 	c="Demonstrative"/>
+    <sdef n="itg" 	c="Question word / interrogative"/>
+    <sdef n="qnt" 	c="Quantifier"/>
+    <sdef n="neg" 	c="Negative"/>
+    <sdef n="emph" 	c="Emphatic"/>
+    <sdef n="vblex" 	c="Verb"/>
+    <sdef n="pass" 	c="-st form"/>
+    <sdef n="pstv" 	c="-st verb"/>
+    <sdef n="inf" 	c="Infinitive"/>
+    <sdef n="pres" 	c="Present"/>
+    <sdef n="imp" 	c="Imperative"/>
+    <sdef n="pret" 	c="Preterite"/>
+    <sdef n="pr" 	c="Preposition"/>
+    <sdef n="adv" 	c="Adverb"/>
+    <sdef n="ij" 	c="Interjection"/>
+    <sdef n="adj" 	c="Adjective"/>
+    <sdef n="cnjsub" 	c="Subordinating conjunction"/>
+    <sdef n="cnjcoo" 	c="Co-ordinating conjunction"/>
+    <sdef n="cnjadv" 	c="Adverbial conjunction"/>
+    <sdef n="comp" 	c="Comparative"/>
+    <sdef n="sup" 	c="Superlative"/>
+    <sdef n="num" 	c="Numeral"/>
+    <sdef n="ord" 	c="Ordinal"/>
+    <sdef n="acr" 	c="Acronym"/>
+    <sdef n="sent" 	c="Sentence end"/>
+    <sdef n="cm" 	c="Comma"/>
+    <sdef n="apos" 	c="Apostrophe"/>
+    <sdef n="clb" 	c="Possible clause boundary"/>
+    <sdef n="lpar" 	c="Left parenthesis"/>
+    <sdef n="rpar" 	c="Right parenthesis"/>
+
+    <sdef n="rel" 	c="Relativizer"/>
+
+    <sdef n="email" 	c="Email address"/>
+  </sdefs>
+  <pardefs>
+    <pardef n="rem-gender">
+      <e r="LR"><p><l><s n="f"/></l><r></r></p></e>
+      <e>                    <p><l></l><r></r></p></e>
+    </pardef>
+  </pardefs>
+
+  <section id="main" type="standard">
+    <e><p><l>katt<s n="n"/></l><r>cat<s n="n"/></r></p></e>
+  </section>
+
+  <section id="simple" type="standard">
+    <!-- simple words -->
+    <e lm="æve"><p><l>æve<s n="n"/></l><r>eternity<s n="n"/></r></p><par n="rem-gender"/></e>
+    <e lm="løe"><p><l>løe<s n="n"/></l><r>shed<s n="n"/></r></p><par n="rem-gender"/></e>
+    <e lm="ete"><p><l>ete<s n="n"/></l><r>food<s n="n"/></r></p></e>
+  </section>
+
+  <section id="complex" type="standard">
+    <!-- compounding -->
+    <e lm="rive"><p><l>rive<s n="n"/></l><r>rake<s n="n"/></r></p><par n="rem-gender"/></e>
+    <e lm="semje"><p><l>semje<s n="n"/></l><r>agreement<s n="n"/></r></p><par n="rem-gender"/></e>
+    <e lm="tåke"><p><l>tåke<s n="n"/></l><r>fog<s n="n"/></r></p></e>
+    <e lm="tåre"><p><l>tåre<s n="n"/></l><r>tear<s n="n"/></r></p></e>
+
+    <!-- regex -->
+    <e>
+      <re>[a-z]+@[a-z]+.yes</re>
+      <p><l><s n="email"/></l><r><s n="email"/></r></p>
+    </e>
+
+    <!-- the j tag / + -->
+    <e><p><l>a<s n="pr"/></l><r>to<s n="pr"/></r></p></e>
+    <e><p><l>el<b/>que<s n="rel"/></l><r>which<s n="rel"/></r></p></e>
+    <e><p><l>el<b/>qual<s n="rel"/></l><r>whach<s n="rel"/></r></p></e>
+
+    <!-- the g tag / # -->
+    <e><p><l>become<s n="vblex"/></l><r>bli<s n="vblex"/></r></p></e>
+    <e><p><l>become<g><b/>acquainted</g><s n="vblex"/></l><r>bli<g><b/>kjent</g><s n="vblex"/></r></p></e>
+    <e><p><l>become<g><b/>acquainted<b/>with</g><s n="vblex"/></l><r>bli<g><b/>kjent<b/>med</g><s n="vblex"/></r></p></e>
+
+    <!-- j followed by g -->
+    <e><p><l>be<g><b/>sorry</g><s n="vblex"/></l><r>vere<g>lei<b/>seg</g><s n="vblex"/></r></p></e>
+    <e><p><l>not<s n="adv"/></l><r>ikkje<s n="adv"/></r></p></e>
+
+    <!-- g containing j (in eo-fr, but this must be an error?) -->
+    <e><p><l>servir<g></g><s n="vblex"/></l><r>servere<s n="vblex"/></r></p></e>
+    <e><p><l>desservir<g></g><s n="vblex"/></l><r>deservere<s n="vblex"/></r></p></e>
+    <e><p><l>à<s n="pr"/></l><r>til<s n="pr"/></r></p></e>
+  </section>
+
+  <section id="punct" type="standard">
+    <e><p><l>,<s n="cm"/></l><r>,<s n="cm"/></r></p></e>
+    <e><p><l>.<s n="sent"/></l><r>.<s n="sent"/></r></p></e>
+  </section>
+</dictionary>
