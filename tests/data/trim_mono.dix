@@ -144,6 +144,14 @@
         <r><g><b/>acquainted<b/>nobidix</g></r>
       </p>
     </e>
+    <e lm="uncome nobidix">
+      <i>unc</i>
+      <par n="bec/ome__vblex"/>
+      <p>
+        <l><b/>nobidix</l>
+        <r><g><b/>nobidix</g></r>
+      </p>
+    </e>
 
     <!-- j followed by g -->
     <e lm="be not sorry">

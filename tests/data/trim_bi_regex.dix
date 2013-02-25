@@ -86,6 +86,12 @@
     <e lm="tåke"><p><l>tåke<s n="n"/></l><r>fog<s n="n"/></r></p></e>
     <e lm="tåre"><p><l>tåre<s n="n"/></l><r>tear<s n="n"/></r></p></e>
 
+    <!-- regex -->
+    <e>
+      <re>[a-z]+@[a-z]+.yes</re>
+      <p><l><s n="email"/></l><r><s n="email"/></r></p>
+    </e>
+
     <!-- the j tag / + -->
     <e><p><l>a<s n="pr"/></l><r>to<s n="pr"/></r></p></e>
     <e><p><l>el<b/>que<s n="rel"/></l><r>which<s n="rel"/></r></p></e>
