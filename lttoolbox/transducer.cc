@@ -619,7 +619,7 @@ Transducer::reverse(int const epsilon_tag)
 }
 
 void
-Transducer::show(Alphabet &alphabet, FILE *output, int const epsilon_tag)
+Transducer::show(Alphabet const &alphabet, FILE *output, int const epsilon_tag)
 {
   joinFinals(epsilon_tag);
 

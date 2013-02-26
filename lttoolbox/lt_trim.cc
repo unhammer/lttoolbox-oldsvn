@@ -122,13 +122,13 @@ int main(int argc, char *argv[])
 
   trim_to.initBiltrans();
   checkValidity(trim_to);
-  // TODO: how to deal with about case conversions, ie. 'A' accepted as 'a'?
+  // TODO: how to deal with case conversions, ie. 'A' accepted as 'a'?
 
 
+  std::map<wstring, Transducer> trans_trimmed = trans_trimmed;
   for(map<wstring, TrimTransducer>::iterator it = trans_full.begin(); it != trans_full.end(); it++)
   {
-    //it->second.minimize(); // TODO: necessary?
-    it->second.trim(alph_full, trim_to);
+    trans_trimmed[it->first] = it->second.trim(alph_full, trim_to);
   }
 
 
@@ -145,10 +145,10 @@ int main(int argc, char *argv[])
   alph_full.write(file_trimmed);
 
   // transducers
-  Compression::multibyte_write(trans_full.size(), file_trimmed);
+  Compression::multibyte_write(trans_trimmed.size(), file_trimmed);
 
   int conta=0;
-  for(map<wstring, TrimTransducer>::iterator it = trans_full.begin(); it != trans_full.end(); it++)
+  for(map<wstring, Transducer>::iterator it = trans_trimmed.begin(); it != trans_trimmed.end(); it++)
   {
     conta++;
     wcout << it->first << " " << it->second.size();

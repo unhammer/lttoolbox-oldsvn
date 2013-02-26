@@ -29,46 +29,63 @@
 #include <vector>
 
 
-void
+Transducer
 TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int const epsilon_tag)
 {
-  bool DEBUG = false;
+  bool DEBUG = true;
+
+  Transducer trimmed;
+
+  if(DEBUG) { wcout << L"full before min"<<endl; show(alph); }
 
   joinFinals(epsilon_tag);      // TODO necessary?
 
   Alphabet alph_trim_to = trim_to.getAlphabet();
 
-  typedef std::pair<int, State*> untrPair;
+  typedef std::pair< std::pair<int,int>, State*> untrPair;
   std::list<untrPair> untrimmed; // used last-in-first-out / depth-first to avoid memory blow-up
-  std::set<int> seen;
-
-  untrimmed.push_front(untrPair(getInitial(), trim_to.getInitial()));
+  std::map<int, int> seen;
+  
+  untrimmed.push_front(untrPair(std::pair<int,int>(getInitial(),
+                                                   trimmed.getInitial()),
+                                trim_to.getInitial()));
   while(untrimmed.size() > 0)
   {
     untrPair auxest = untrimmed.back();
     untrimmed.pop_back();
 
-    int current = auxest.first;
-    seen.insert(current);
+    std::pair<int,int> current = auxest.first;
+    State* current_trim_to = auxest.second;
+    
+    if(DEBUG) wcout << L"from " << current.first << L"\ttrimmed.numberOfTransitions(): " << trimmed.numberOfTransitions() << L"\t";
+    if(DEBUG) { if(current_trim_to == NULL) wcout <<L"copying all the way"<<endl; else wcout <<L"bidix analysed so far: " <<current_trim_to->getReadableString(trim_to.getAlphabet()) << endl; }
 
-    if(DEBUG) wcout << L"from " << current << L"\ttransitions.size(): " << transitions.size() << endl;
-
-    std::map<int, multimap<int, int> >::const_iterator it = transitions.find(current);
+    std::map<int, multimap<int, int> >::const_iterator it = transitions.find(current.first);
     if(it == transitions.end())
     {
-      wcerr << L"ERROR: Didn't find referenced state " << current << endl;
+      wcerr << L"ERROR: Didn't find referenced state " << current.first << endl;
       exit(EXIT_FAILURE);
     }
     std::multimap<int, int> edges = it->second;
-
-    State* current_trim_to = auxest.second;
-    if(DEBUG) wcout <<L"analysed so far: " <<current_trim_to->getReadableString(trim_to.getAlphabet()) << endl;
-
     for(std::multimap<int, int>::iterator edge = edges.begin(); edge != edges.end(); edge++)
     {
       int label = edge->first;
       std::pair<int, int> p = alph.decode(label);
       int to_state = edge->second;
+
+      if(current_trim_to == NULL) 
+      {
+        int new_state = trimmed.insertSingleTransduction(label, current.second);
+        seen[to_state] = new_state;
+        untrimmed.push_front(untrPair(std::pair<int,int>(to_state,
+                                                         new_state),
+                                      NULL));
+        if(isFinal(to_state)) 
+        {
+          trimmed.setFinal(new_state);
+        }
+        continue;
+      }
 
       // There's no functional step method, copy manually :-/
       State* next_trim_to = new State(*current_trim_to);
@@ -83,39 +100,57 @@ TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int cons
         next_trim_to->step(p.second);
       }
 
-      if(DEBUG) wcout<<L"from "<<current<<L" ("<<p.first<<L":"<<p.second<<L")/"<<label<<L" to "<<to_state<<endl;
-      if(DEBUG) wcout <<L"\tanalysed with this step: " <<next_trim_to->getReadableString(trim_to.getAlphabet()) << endl;
+      if(DEBUG) wcout<<L"from "<<current.first<<L" ("<<p.first<<L":"<<p.second<<L")/"<<label<<L" to "<<to_state<<endl;
+      if(DEBUG) wcout <<L"\tbidix analysed with this step: " <<next_trim_to->getReadableString(trim_to.getAlphabet()) << endl;
+      if(DEBUG) { wstring r=L""; alph.getSymbol(r, p.second); wcout<<L"\t"<<r; }
 
       if(alph.isTag(p.second) && next_trim_to->isFinal(trim_to.getAllFinals()))
       {
-        if(DEBUG) wcout << L"at a tag and isFinal, stop trimming this path"<<endl;
-      }
-      else
-      {
-        if(DEBUG) {
-          wstring r=L""; alph.getSymbol(r, p.second);
-          wcout<<L"\t"<<r;
-        }
-        if(next_trim_to->size() == 0) {
-          if(DEBUG) wcout<<L" ->trim";
-          edges.erase(label);
-          transitions[current] = edges;
-        }
-        else if(seen.count(to_state) == 0)
+        if(DEBUG) wcout << L"at a tag and isFinal, copy all the way"<<endl;
+        int new_state = trimmed.insertSingleTransduction(label, current.second); // or insertNewSingleTransduction? TODO
+        seen[to_state] = new_state;
+        untrimmed.push_front(untrPair(std::pair<int,int>(to_state,
+                                                         new_state),
+                                      NULL));
+        if(isFinal(to_state))
         {
-          if(DEBUG) wcout<<L" ->stepping";
-          untrimmed.push_front(untrPair(to_state, next_trim_to));
+          trimmed.setFinal(new_state);
         }
-        if(DEBUG) wcout<<endl;
+      }
+      else if(next_trim_to->size() == 0)
+      {
+          if(DEBUG) wcout<<L" ->trim"<<endl;
+      }
+      else if(seen.count(to_state) == 0)
+      {
+        if(DEBUG) wcout<<L" ->stepping"<<endl;
+        int new_state = trimmed.insertSingleTransduction(label, current.second);
+        seen[to_state] = new_state;
+        untrimmed.push_front(untrPair(std::pair<int,int>(to_state,
+                                                         new_state),
+                                      next_trim_to));
+          
+        if(isFinal(to_state)) 
+        {
+          trimmed.setFinal(new_state);
+        }
+      }
+      else 
+      {
+        if(DEBUG) wcout<<L" ->linkStates "<<current.second<<L"→"<<seen[to_state]<<L" ("<<p.first<<L":"<<p.second<<L")"<<endl;
+        trimmed.linkStates(current.second, seen[to_state], label);
       }
     }
     if(current_trim_to != trim_to.getInitial())
     {
-      // TODO correct?
-      delete current_trim_to;
+      delete current_trim_to;   // TODO correct?
     }
-    if(DEBUG) wcout<<L"untrimmed.size: "<<untrimmed.size()<<endl;
   }
 
-  minimize();
+  if(DEBUG) { wcout << L"trimmed before min:"<<endl; trimmed.show(alph); }
+  trimmed.minimize();
+  if(DEBUG) { wcout << L"trimmed after min:"<<endl; trimmed.show(alph); }
+
+
+  return trimmed;
 }

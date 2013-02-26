@@ -39,6 +39,6 @@ public:
    * @param trim_to other transducer to trim to, typically a bidix
    * @param epsilon_tag the tag to take as epsilon
    */
-  void trim(Alphabet const &alph, FSTProcessor const &trim_to, int const epsilon_tag = 0);
+  Transducer trim(Alphabet const &alph, FSTProcessor const &trim_to, int const epsilon_tag = 0);
 
 };
