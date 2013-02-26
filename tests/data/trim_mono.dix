@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dictionary>
-  <alphabet>АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџшЭѐѝюABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzè</alphabet>
+  <alphabet>АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџшЭѐѝюABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzèæøåÆØÅ</alphabet>
 <sdefs>
     <sdef n="n" 	c="Noun"/>
     <sdef n="np" 	c="Proper noun"/>
@@ -99,6 +99,8 @@
     <e lm="æve">          <i>æv</i><par n="lø/e_no-cp__n"/></e>
     <e lm="løe">          <i>lø</i><par n="lø/e_no-cp__n"/></e>
     <e lm="ete">             <i>et</i><par n="lø/e_no-cp__n"/></e>
+    <e lm="kråe">             <i>krå</i><par n="lø/e_no-cp__n"/></e>
+    <e lm="kråke">             <i>kråk</i><par n="lø/e_no-cp__n"/></e>
     <e lm="nobidix">             <i>nobidix</i><par n="lø/e_no-cp__n"/></e>
 
     <!-- compounding -->

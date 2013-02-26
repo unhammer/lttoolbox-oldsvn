@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dictionary>
-  <alphabet>АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџшЭѐѝюABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzè</alphabet>
+  <alphabet>АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџшЭѐѝюABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzèæøåÆØÅ</alphabet>
   <sdefs>
     <sdef n="n" 	c="Noun"/>
     <sdef n="np" 	c="Proper noun"/>
@@ -77,6 +77,7 @@
     <e lm="æve"><p><l>æve<s n="n"/></l><r>eternity<s n="n"/></r></p><par n="rem-gender"/></e>
     <e lm="løe"><p><l>løe<s n="n"/></l><r>shed<s n="n"/></r></p><par n="rem-gender"/></e>
     <e lm="ete"><p><l>ete<s n="n"/></l><r>food<s n="n"/></r></p></e>
+    <e lm="kråke"><p><l>kråke<s n="n"/></l><r>crow<s n="n"/></r></p></e>
   </section>
 
   <section id="complex" type="standard">

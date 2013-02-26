@@ -56,23 +56,37 @@ class TestTrim(unittest.TestCase):
         proc.stdin.close()
         proc.stdout.close()
 
-    def test_simple(self):
+    def test_simple_yes(self):
         self.in_out(
             [('ete', '^ete/ete<n><f><sg><ind>$'),
              ('løe', '^løe/løe<n><f><sg><ind>$'),
              ('æve', '^æve/æve<n><f><sg><ind>$'),
+             ('kråke', '^kråke/kråke<n><f><sg><ind>$')],
+            "data/trim_trimmed.bin"
+            )
+
+    def test_simple_no(self):
+        self.in_out(
+            [('et', '^et/*et$'),
+             ('kråe', '^kråe/*kråe$'),
              ('nobidixe', '^nobidixe/*nobidixe$')],
             "data/trim_trimmed.bin"
             )
 
-    def test_regex(self):
+    def test_regex_no(self):
+        self.in_out(
+            [('nobidixe', '^nobidixe/*nobidixe$'),
+             ('user', '^user/*user$'),
+             ('user\@foo.no', '^user/*user$\@^foo/*foo$^./.<sent>$^no/*no$')],
+            "data/trim_trimmed_regex.bin"
+            )
+
+    def test_regex_yes(self):
         self.in_out(
             [('ete', '^ete/ete<n><f><sg><ind>$'),
              ('løe', '^løe/løe<n><f><sg><ind>$'),
              ('æve', '^æve/æve<n><f><sg><ind>$'),
-             ('nobidixe', '^nobidixe/*nobidixe$'),
-             ('user\@foo.yes', '^user\@foo.yes/user\@foo.yes<email>$'),
-             ('user\@foo.no', '^user/*user$\@^foo/*foo$^./.<sent>$^maybe/*no$')],
+             ('user\@foo.yes', '^user\@foo.yes/user\@foo.yes<email>$')],
             "data/trim_trimmed_regex.bin"
             )
 
