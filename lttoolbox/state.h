@@ -120,6 +120,12 @@ public:
    */
   State & operator =(State const &s);
   
+
+  /**
+   * @return a pointer to the Node we're at
+   */
+  Node* where() const;
+
   /**
    * Number of alive transductions
    * @return the size

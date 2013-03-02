@@ -83,6 +83,12 @@ State::copy(State const &s)
   }
 }
 
+Node*
+State::where() const
+{
+  return state.back().where;
+}
+
 int 
 State::size() const
 {

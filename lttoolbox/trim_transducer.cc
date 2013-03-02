@@ -32,7 +32,7 @@
 Transducer
 TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int const epsilon_tag)
 {
-  bool DEBUG = true;
+  bool DEBUG = false;
 
   Transducer trimmed;
 
@@ -44,8 +44,8 @@ TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int cons
 
   typedef std::pair< std::pair<int,int>, State*> untrPair;
   std::list<untrPair> untrimmed; // used last-in-first-out / depth-first to avoid memory blow-up
-  std::map<int, int> seen;
-  
+  std::map<std::pair<int, Node*>, int> seen;
+
   untrimmed.push_front(untrPair(std::pair<int,int>(getInitial(),
                                                    trimmed.getInitial()),
                                 trim_to.getInitial()));
@@ -56,7 +56,7 @@ TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int cons
 
     std::pair<int,int> current = auxest.first;
     State* current_trim_to = auxest.second;
-    
+
     if(DEBUG) wcout << L"from " << current.first << L"\ttrimmed.numberOfTransitions(): " << trimmed.numberOfTransitions() << L"\t";
     if(DEBUG) { if(current_trim_to == NULL) wcout <<L"copying all the way"<<endl; else wcout <<L"bidix analysed so far: " <<current_trim_to->getReadableString(trim_to.getAlphabet()) << endl; }
 
@@ -73,17 +73,27 @@ TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int cons
       std::pair<int, int> p = alph.decode(label);
       int to_state = edge->second;
 
-      if(current_trim_to == NULL) 
+      if(current_trim_to == NULL)
       {
-        int new_state = trimmed.insertSingleTransduction(label, current.second);
-        seen[to_state] = new_state;
-        untrimmed.push_front(untrPair(std::pair<int,int>(to_state,
-                                                         new_state),
-                                      NULL));
-        if(isFinal(to_state)) 
+        if(seen.count(std::pair<int,Node*>(to_state, NULL)) == 0)
         {
-          trimmed.setFinal(new_state);
+          int new_state = trimmed.insertSingleTransduction(label, current.second);
+          seen[std::pair<int,Node*>(to_state, NULL)] = new_state;
+          if(DEBUG) wcout << L" ->notrim-stepping: " << to_state << L",NULL=" << new_state<<endl;
+          untrimmed.push_front(untrPair(std::pair<int,int>(to_state,
+                                                           new_state),
+                                      NULL));
+          if(isFinal(to_state))
+          {
+            trimmed.setFinal(new_state);
+          }
         }
+        else
+        {
+          if(DEBUG) wcout<<L" ->notrim-linkStates "<<current.second<<L"→"<<seen[std::pair<int,Node*>(to_state,NULL)]<<L" ("<<p.first<<L":"<<p.second<<L")"<<endl;
+          trimmed.linkStates(current.second, seen[std::pair<int,Node*>(to_state,NULL)], label);
+        }
+
         continue;
       }
 
@@ -108,7 +118,7 @@ TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int cons
       {
         if(DEBUG) wcout << L"at a tag and isFinal, copy all the way"<<endl;
         int new_state = trimmed.insertSingleTransduction(label, current.second); // or insertNewSingleTransduction? TODO
-        seen[to_state] = new_state;
+        seen[std::pair<int,Node*>(to_state, NULL)] = new_state;
         untrimmed.push_front(untrPair(std::pair<int,int>(to_state,
                                                          new_state),
                                       NULL));
@@ -121,24 +131,24 @@ TrimTransducer::trim(Alphabet const &alph, FSTProcessor const &trim_to, int cons
       {
           if(DEBUG) wcout<<L" ->trim"<<endl;
       }
-      else if(seen.count(to_state) == 0)
+      else if(seen.count(std::pair<int,Node*>(to_state, next_trim_to->where())) == 0)
       {
         if(DEBUG) wcout<<L" ->stepping"<<endl;
         int new_state = trimmed.insertSingleTransduction(label, current.second);
-        seen[to_state] = new_state;
+        seen[std::pair<int,Node*>(to_state, next_trim_to->where())] = new_state;
         untrimmed.push_front(untrPair(std::pair<int,int>(to_state,
                                                          new_state),
                                       next_trim_to));
-          
-        if(isFinal(to_state)) 
+
+        if(isFinal(to_state))
         {
           trimmed.setFinal(new_state);
         }
       }
-      else 
+      else
       {
-        if(DEBUG) wcout<<L" ->linkStates "<<current.second<<L"→"<<seen[to_state]<<L" ("<<p.first<<L":"<<p.second<<L")"<<endl;
-        trimmed.linkStates(current.second, seen[to_state], label);
+        if(DEBUG) wcout<<L" ->linkStates "<<current.second<<L"→"<<seen[std::pair<int,Node*>(to_state,next_trim_to->where())]<<L" ("<<p.first<<L":"<<p.second<<L")"<<endl;
+        trimmed.linkStates(current.second, seen[std::pair<int,Node*>(to_state,next_trim_to->where())], label);
       }
     }
     if(current_trim_to != trim_to.getInitial())
