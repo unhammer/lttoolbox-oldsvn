@@ -104,3 +104,17 @@ class TestTrim(unittest.TestCase):
              ('tåkecmpnobidixe', '^tåkecmpnobidixe/*tåkecmpnobidixe$')],
             "data/trim_trimmed.bin"
             )
+
+    def test_j_yes(self):
+        self.in_out(
+            [('a', '^a/a<pr>$'),
+             ('el que', '^el que/el qual<rel><nn>$'),
+             ('el qual', '^el qual/el qual<rel><nn>$')],
+            "data/trim_trimmed.bin"
+            )
+
+    def test_j_no(self):
+        self.in_out(
+            [('el nobidix', '^el/*el$ ^nobidix/*nobidix$')],
+            "data/trim_trimmed.bin"
+            )
