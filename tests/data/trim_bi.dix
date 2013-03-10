@@ -92,6 +92,9 @@
     <e><p><l>el<b/>que<s n="rel"/></l><r>which<s n="rel"/></r></p></e>
     <e><p><l>el<b/>qual<s n="rel"/></l><r>whach<s n="rel"/></r></p></e>
 
+    <!-- distinguish j from real plus sign: -->
+    <e><p><l>needsb+b<s n="n"/></l><r>trengb+b<s n="n"/></r></p></e>
+
     <!-- the g tag / # -->
     <e><p><l>become<s n="vblex"/></l><r>bli<s n="vblex"/></r></p></e>
     <e><p><l>become<g><b/>acquainted</g><s n="vblex"/></l><r>bli<g><b/>kjent</g><s n="vblex"/></r></p></e>

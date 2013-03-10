@@ -119,6 +119,9 @@
     <e lm="al que"><p><l>al<b/>que</l><r>a<s n="pr"/><j/>el<b/>que<s n="rel"/><s n="nn"/><s n="m"/><s n="sg"/></r></p></e>
     <e lm="al nobidix"><p><l>al<b/>nobidix</l><r>a<s n="pr"/><j/>el<b/>nobidix<s n="rel"/><s n="nn"/><s n="m"/><s n="sg"/></r></p></e>
 
+    <!-- distinguish j from real plus sign: -->
+    <e lm="needsb+b"><p><l>needsb+b</l><r>needsb+b<s n="n"/></r></p></e>
+
 
     <!-- the g tag / # -->
     <e lm="become"><i>bec</i><par n="bec/ome__vblex"/></e>

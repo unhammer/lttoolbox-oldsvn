@@ -108,13 +108,46 @@ class TestTrim(unittest.TestCase):
     def test_j_yes(self):
         self.in_out(
             [('a', '^a/a<pr>$'),
-             ('el que', '^el que/el qual<rel><nn>$'),
-             ('el qual', '^el qual/el qual<rel><nn>$')],
+             ('al que', '^al que/a<pr>+el qual<rel><nn>$'),
+             ('al qual', '^al qual/a<pr>+el qual<rel><nn>$')],
             "data/trim_trimmed.bin"
             )
 
     def test_j_no(self):
         self.in_out(
             [('el nobidix', '^el/*el$ ^nobidix/*nobidix$')],
+            "data/trim_trimmed.bin"
+            )
+
+
+    def test_j_vs_plus(self):
+        # needsb+b<n> is not split by pretransfer since the plus is
+        # before the first tag. It seems we don't have to worry about
+        # non-j plus-sign after tags, since they're not handled by
+        # pretransfer either ...
+        self.in_out(
+            [('needsb+b', '^needsb+b/needsb+b<n>$'),
+             ('needsb', '^needsb/*needsb$')],
+            "data/trim_trimmed.bin"
+            )
+
+
+    def test_g_yes(self):
+        self.in_out(
+            [('become', '^become/become<vblex><inf>/become<vblex><pres>/become<vblex><pp>$'),
+             ('become acquainted', '^become acquainted/become<vblex><inf># acquainted/become<vblex><pres># acquainted/become<vblex><pp># acquainted$'),
+             ('become acquainted with', '^become acquainted with/become<vblex><inf># acquainted with/become<vblex><pres># acquainted with/become<vblex><pp># acquainted with$')],
+            "data/trim_trimmed.bin"
+            )
+
+    def test_g_no(self):
+        self.in_out(
+            [('become acquainted nobidix', '^become/*become$ ^acquainted/*acquainted$ ^nobidix/*nobidix$')],
+            "data/trim_trimmed.bin"
+            )
+
+    def test_g_no_nosub(self):
+        self.in_out(
+            [('uncome nobidix', '^uncome/*uncome$ ^nobidix/*nobidix$')],
             "data/trim_trimmed.bin"
             )
